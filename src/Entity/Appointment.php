@@ -20,6 +20,15 @@ class Appointment
     #[ORM\Column(length: 255)]
     private ?string $duration = null;
 
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    private ?Patient $patient = null;
+
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    private ?Doctor $doctor = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Consultation $consultation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +54,42 @@ class Appointment
     public function setDuration(string $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getPatient(): ?Patient
+    {
+        return $this->patient;
+    }
+
+    public function setPatient(?Patient $patient): static
+    {
+        $this->patient = $patient;
+
+        return $this;
+    }
+
+    public function getDoctor(): ?Doctor
+    {
+        return $this->doctor;
+    }
+
+    public function setDoctor(?Doctor $doctor): static
+    {
+        $this->doctor = $doctor;
+
+        return $this;
+    }
+
+    public function getConsultation(): ?Consultation
+    {
+        return $this->consultation;
+    }
+
+    public function setConsultation(?Consultation $consultation): static
+    {
+        $this->consultation = $consultation;
 
         return $this;
     }
